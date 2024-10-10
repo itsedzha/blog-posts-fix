@@ -29,18 +29,12 @@
         </span>
 
         <span class="float-right">
-                <form 
-                action="/blog/{{ $post->slug }}"
-                method="POST">
+            <form action="/blog/{{ $post->slug }}" method="POST">
                 @csrf
                 @method('delete')
-
-                <button
-                    class="text-red-500 pr-3"
-                    type="submit">
+                <button class="text-red-500 pr-3" type="submit">
                     Delete
                 </button>
-
             </form>
         </span>
     @endif
@@ -50,29 +44,36 @@
     </span>
 
     <p class="text-xl text-gray-700 pt-8 pb-10 leading-8 font-light">
-        {{ $post->body }}
+        {{ $post->description }}
     </p>
 
     <div>
         <img src="{{ asset('images/' . $post->image_path) }}" alt="">
     </div>
 
-    @if($post->comments)
-        <div>
-            <h3>Comments</h3>
+    @if($post->comments->count() > 0)
+        <div class="mt-10">
+            <h3 class="text-2xl font-bold">Comments</h3>
             @foreach ($post->comments as $comment)
-                <p></p>
+                <div class="mt-4 border-b border-gray-200">
+                    <p>{{ $comment->content }}</p>
+                    <p class="text-sm text-gray-500">
+                        By {{ $comment->user->name }} on {{ $comment->created_at->format('jS M Y') }}
+                    </p>
+                </div>
             @endforeach
         </div>
+    @else
+        <p>No comments yet.</p>
     @endif
 
     @if (Auth::check())
-        <div>
-            <form action="/blog/{{$post->slug}}/comments/create" method="post">
+        <div class="mt-10">
+            <form action="/blog/{{ $post->slug }}/comments/create" method="post">
                 @csrf
-                <label for="commentContent">Comment</label>
-                <textarea class="resize rounded-md" name="content" id="commentContent"></textarea>
-                <input type="submit" value="Submit">
+                <label for="commentContent" class="block text-lg font-bold mb-2">Leave a Comment</label>
+                <textarea class="w-full border rounded-md resize-none p-2" name="content" id="commentContent"></textarea>
+                <input type="submit" value="Submit" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md">
             </form>
         </div>
     @endif
