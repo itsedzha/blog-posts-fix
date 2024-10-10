@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -32,13 +33,8 @@ class Post extends Model
         ];
     }
 
-    public function partialDescription(){
-        return (strlen($this->description) > 13) ? substr($this->description,0,200).'...' : $this->description;
-    }
-
     public function truncatedDescription()
-{
-    return Str::limit($this->description, 150);
-}
-
+    {
+        return Str::limit($this->description, 200);
+    }
 }
