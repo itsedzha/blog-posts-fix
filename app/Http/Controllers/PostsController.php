@@ -88,8 +88,10 @@ class PostsController extends Controller
      */
     public function edit($slug)
     {
-
+        $post = Post::where('slug', $slug)->firstOrFail();
+        return view('blog.edit', compact('post'));
     }
+    
  
     /**
      * Update the specified resource in storage.
