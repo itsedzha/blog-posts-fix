@@ -23,9 +23,11 @@
 
 <div class="w-4/5 m-auto pt-20">
     <form 
+        method="post"
         action="/blog"
         enctype="multipart/form-data">
 
+        @csrf
         <input 
             type="text"
             name="title"

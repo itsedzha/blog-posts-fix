@@ -35,4 +35,10 @@ class Post extends Model
     public function partialDescription(){
         return (strlen($this->description) > 13) ? substr($this->description,0,200).'...' : $this->description;
     }
+
+    public function truncatedDescription()
+{
+    return Str::limit($this->description, 150);
+}
+
 }
