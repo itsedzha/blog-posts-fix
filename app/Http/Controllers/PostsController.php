@@ -71,14 +71,10 @@ class PostsController extends Controller
      */
     public function show($slug)
     {
-        $post = null;
-        if (is_numeric($slug) && (int)$slug == $slug) {
-            $post = Post::find($slug);
-        } else {
-            $post = Post::where('slug', $slug)->first();
-        }
-
+        $post = Post::where('slug', $slug)->firstOrFail();
+        return view('blog.show', compact('post'));
     }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -91,7 +87,7 @@ class PostsController extends Controller
         $post = Post::where('slug', $slug)->firstOrFail();
         return view('blog.edit', compact('post'));
     }
-    
+  
  
     /**
      * Update the specified resource in storage.
