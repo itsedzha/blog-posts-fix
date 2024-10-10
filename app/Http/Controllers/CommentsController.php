@@ -14,15 +14,15 @@ class CommentsController extends Controller
             'content' => 'required'
         ]);
 
-        Post::where('slug', $slug)->first();
+        $post = Post::where('slug', $slug)->firstOrFail();
 
         Comment::create([
             'content' => $request->input('content'),
             'user_id' => auth()->user()->id,
+            'post_id' => $post->id
         ]);
 
         return redirect("/blog/{$slug}")
             ->with('message', 'Your comment has been added!');
     }
-
 }
