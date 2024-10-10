@@ -132,3 +132,4 @@ class PostsController extends Controller
             ->with('message', 'Your post has been deleted!');
     }
 }
+
